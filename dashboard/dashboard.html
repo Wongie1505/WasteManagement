@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIS WasteManagement - Dashboard</title>
+    
+    <!-- Leaflet CSS for mapping -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+    
+    <!-- -->
+    <link rel="stylesheet" href="./dashboard.css">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar sidebar-left">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon">🗑️</span>
+                    <span class="logo-text">GIS WasteManagement</span>
+                </div>
+                <div class="webhook-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Live WhatsApp Bot: Connected</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-screen="gis-map">
+                    <span class="nav-icon">🗺</span>
+                    <span class="nav-label">GIS Map</span>
+                    <span class="nav-badge critical">3 Bins</span>
+                </a>
+                <a href="../whatsappfeed/whatsappfeed.html" class="nav-item" data-screen="whatsapp-reports">
+                    <span class="nav-icon">💬</span>
+                    <span class="nav-label">WhatsApp Reports</span>
+                    <span class="nav-tag">LIVE FEED</span>
+                </a>
+                <a href="#" class="nav-item disabled" data-screen="route-dispatch">
+                    <span class="nav-icon">🚚</span>
+                    <span class="nav-label">Route Dispatch</span>
+                    <span class="nav-tag coming-soon">Coming</span>
+                </a>
+                <a href="#" class="nav-item disabled" data-screen="audit-sla">
+                    <span class="nav-icon">📊</span>
+                    <span class="nav-label">Statistics</span>
+                    <span class="nav-tag coming-soon">Coming</span>
+                </a>
+            </nav>
+
+            <!-- <div class="sidebar-footer">
+                <div class="mode-status">
+                    <span class="label">MODE STATUS</span>
+                    <span class="value">Limbe Central</span>
+                </div>
+                <div class="telemetry-sync">
+                    <span class="label">Telemetry Sync</span>
+                    <span class="value">00:06s ago</span>
+                </div>
+            </div> -->
+        </aside>
+
+        <!-- CENTER: MAP + HEADER -->
+        <main class="main-content">
+            
+            <!-- Top Header Bar -->
+            <header class="top-bar">
+                <div class="header-left">
+                    <h1 class="district-title">Blantyre City Council</h1>
+                </div>
+                
+                <div class="header-center">
+                    <div class="critical-alert">
+                        <span class="alert-icon">🚨</span>
+                        <span class="alert-text">3 Critical Overflows Detected</span>
+                    </div>
+                    <div class="fleet-status">
+                        <span class="fleet-icon">🚛</span>
+                        <span class="fleet-text">Available Vehicles: 4</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="btn-auto-sync">
+                        <span>Auto-sync</span>
+                        <span class="sync-time">5s</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Map Container -->
+            <div class="map-wrapper">
+                <div id="map" class="map-container"></div>
+                
+                <!-- Map Legend -->
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <span class="legend-dot critical"></span>
+                        <span class="legend-label">Critical (>80%)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot half-full"></span>
+                        <span class="legend-label">En Route (50-80%)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-dot clear"></span>
+                        <span class="legend-label">Clear (0-20%)</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-text">Scale 1:2,500</span>
+                    </div>
+                </div>
+
+                <!-- Map Controls -->
+                <div class="map-controls">
+                    <button id="zoom-in" class="control-btn">+</button>
+                    <button id="zoom-out" class="control-btn">−</button>
+                    <button id="recenter" class="control-btn" title="Recenter map">⊙</button>
+                </div>
+            </div>
+
+            <!-- Bin Popup (Hidden by default, shown on click) -->
+            <div id="bin-popup" class="bin-popup hidden">
+                <div class="popup-header">
+                    <h3 id="popup-bin-id" class="popup-title">Bin #01</h3>
+                    <button id="popup-close" class="popup-close">✕</button>
+                </div>
+                
+                <div class="popup-body">
+                    <p id="popup-location" class="popup-location">Limbe Market NW Gate </p>
+                    
+                    <div class="popup-section">
+                        <div class="popup-row">
+                            <span class="label">Status:</span>
+                            <span id="popup-status" class="value critical-text">FULL (100%)</span>
+                        </div>
+                        <div class="popup-row">
+                            <span class="label">Last Report:</span>
+                            <span id="popup-last-report" class="value">5 mins ago</span>
+                        </div>
+                        <div class="popup-row">
+                            <span class="label">Reporter:</span>
+                            <span id="popup-reporter" class="value">Limbani Phiri</span>
+                        </div>
+                        <div class="popup-row">
+                            <span class="label">Contact:</span>
+                            <span id="popup-contact" class="value phone-link">+265 99 123 4567</span>
+                        </div>
+                    </div>
+
+                    <div class="popup-actions">
+                        <button id="popup-mark-collected" class="btn btn-primary">✓ Mark Collected</button>
+                        <button id="popup-sms-driver" class="btn btn-secondary">SMS Driver</button>
+                        <button id="popup-view-history" class="btn btn-secondary">View History</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- RIGHT SIDEBAR: REPORTS FEED -->
+        <aside class="sidebar sidebar-right">
+            <div class="feed-header">
+                <h2 class="feed-title">Reports</h2>
+                <span id="report-count" class="report-count">10 reports</span>
+                <button id="refresh-feed" class="btn-refresh">🔄 Refresh</button>
+            </div>
+
+            <div class="feed-filters">
+                <button class="filter-btn active" data-filter="all">All (10)</button>
+                <button class="filter-btn" data-filter="urgent">Urgent (3)</button>
+                <button class="filter-btn" data-filter="in-progress">In Progress (2)</button>
+                <button class="filter-btn" data-filter="collected">Collected (5)</button>
+            </div>
+
+            <div id="reports-feed" class="reports-feed">
+                <!-- Reports will be populated here by JavaScript -->
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="../shared/supabaseConfig.js"></script>
+    <script src="../shared/utils.js"></script>
+    <script src="./dashboard.js"></script>
+</body>
+</html>
