@@ -620,6 +620,9 @@ body {
 .report-item.collected {
     border-left-color: var(--color-success);
 }
+.report-item.in-progress {
+    border-left-color: var(--color-warning);  /* Orange */
+}
 
 .report-item-header {
     display: flex;
