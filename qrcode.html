@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate QR Code</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #0D47A1;
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        input {
+            width: 100%;
+            max-width: 500px;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #0D47A1;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0A3A8C;
+        }
+        #qrcode {
+            margin: 30px auto;
+            display: inline-block;
+            padding: 20px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .download-btn {
+            background-color: #2E7D32;
+            margin-top: 20px;
+        }
+        .download-btn:hover {
+            background-color: #1B5E20;
+        }
+        .info {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #E3F2FD;
+            border-radius: 4px;
+            color: #0D47A1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CivicWaste GIS - QR Code Generator</h1>
+        <p>Generate a QR code that links to the report submission form</p>
+        
+        <div class="input-group">
+            <label for="url">URL to encode:</label><br>
+            <input type="text" id="url" placeholder="e.g., https://yoursite.com/whatsappfeed/whatsappfeed.html" value="https://yoursite.com/whatsappfeed/whatsappfeed.html">
+            <button onclick="generateQR()">Generate QR Code</button>
+        </div>
+
+        <div id="qrcode"></div>
+
+        <button class="download-btn" onclick="downloadQR()" style="display:none;" id="downloadBtn">Download QR Code</button>
+
+        <div class="info">
+            <strong>Instructions:</strong><br>
+            1. Replace the URL with your actual form URL<br>
+            2. Click "Generate QR Code"<br>
+            3. Click "Download QR Code" to save as image<br>
+            4. Print and stick on waste bins
+        </div>
+    </div>
+
+    <script>
+        let qr = null;
+
+        function generateQR() {
+            const url = document.getElementById('url').value;
+            
+            if (!url) {
+                alert('Please enter a URL');
+                return;
+            }
+
+            // Clear previous QR code
+            document.getElementById('qrcode').innerHTML = '';
+
+            // Generate new QR code
+            qr = new QRCode(document.getElementById('qrcode'), {
+                text: url,
+                width: 300,
+                height: 300,
+                colorDark: '#0D47A1',
+                colorLight: '#FFFFFF',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            // Show download button
+            document.getElementById('downloadBtn').style.display = 'block';
+        }
+
+        function downloadQR() {
+            const canvas = document.querySelector('#qrcode canvas');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'civicwaste-qr-code.png';
+            link.click();
+        }
+
+        // Generate on load with default URL
+        window.addEventListener('load', generateQR);
+    </script>
+</body>
+</html>s

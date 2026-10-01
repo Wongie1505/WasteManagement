@@ -4,40 +4,231 @@
     box-sizing: border-box;
 }
 
+:root {
+    --color-primary: #0D47A1;
+    --color-success: #2E7D32;
+    --color-error: #D32F2F;
+    --color-warning: #F57C00;
+    --color-bg-light: #F5F5F5;
+    --color-bg-card: #FFFFFF;
+    --color-text-primary: #212121;
+    --color-text-secondary: #757575;
+    --color-border: #E0E0E0;
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: #f5f5f5;
-    color: #212121;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--color-bg-light);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    padding: 20px;
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 40px 20px;
-    background-color: white;
+}
+
+.form-wrapper {
+    background-color: var(--color-bg-card);
     border-radius: 8px;
+    padding: 40px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
 }
 
-h1 {
+.form-header {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.form-header h1 {
     font-size: 28px;
-    margin-bottom: 16px;
-    color: #0D47A1;
+    margin-bottom: 8px;
+    color: var(--color-primary);
 }
 
-p {
+.form-header p {
     font-size: 14px;
-    line-height: 1.6;
-    margin-bottom: 12px;
-    color: #757575;
+    color: var(--color-text-secondary);
 }
 
-a {
-    color: #0D47A1;
+.report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--color-text-primary);
+}
+
+.form-group small {
+    font-size: 12px;
+    color: var(--color-text-secondary);
+    margin-top: 4px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.1);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--color-text-secondary);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn-submit {
+    padding: 12px 16px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: #0A3A8C;
+}
+
+.btn-submit:active {
+    transform: scale(0.98);
+}
+
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-help {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.form-help a {
+    color: var(--color-primary);
     text-decoration: none;
 }
 
-a:hover {
+.form-help a:hover {
     text-decoration: underline;
+}
+
+/* Success/Error Messages */
+.success-message,
+.error-message {
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    animation: slideIn 0.3s ease;
+}
+
+.success-message {
+    background-color: #E8F5E9;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+}
+
+.error-message {
+    background-color: #FFEBEE;
+    border: 1px solid var(--color-error);
+    color: var(--color-error);
+}
+
+.success-message h3,
+.error-message h3 {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.success-message p,
+.error-message p {
+    margin-bottom: 16px;
+    font-size: 14px;
+}
+
+.btn-reset,
+.btn-retry {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-reset {
+    background-color: var(--color-success);
+    color: white;
+}
+
+.btn-reset:hover {
+    background-color: #1B5E20;
+}
+
+.btn-retry {
+    background-color: var(--color-error);
+    color: white;
+}
+
+.btn-retry:hover {
+    background-color: #B71C1C;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 600px) {
+    .form-wrapper {
+        padding: 20px;
+    }
+
+    .form-header h1 {
+        font-size: 24px;
+    }
 }
