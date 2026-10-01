@@ -14,147 +14,18 @@ let currentFilter = 'all';
 // ============================================================
 
 async function loadData() {
-    try {
-        console.log('Loading data from Supabase...');
-        
-        initSupabase();
-        
-        BINS = await fetchBinsFromSupabase();
-        console.log(`Loaded ${BINS.length} bins`);
-        
-        REPORTS = await fetchReportsFromSupabase();
-        console.log(`Loaded ${REPORTS.length} reports`);
-        
-        if (BINS.length === 0) {
-            console.warn('No bins in Supabase. Using mock data.');
-            BINS = getMockBins();
-            REPORTS = getMockReports();
-        }
-    } catch (error) {
-        console.error('Error loading from Supabase:', error);
-        console.log('Falling back to mock data...');
-        BINS = getMockBins();
-        REPORTS = getMockReports();
+    console.log('Loading from Supabase...');
+    
+    initSupabase();
+    
+    BINS = await fetchBinsFromSupabase();
+    if (BINS.length === 0) {
+        throw new Error('No bins returned from Supabase. Check credentials and database.');
     }
-}
-
-// ============================================================
-// MOCK DATA (Updated from GitHub)
-// ============================================================
-
-function getMockBins() {
-    return [
-        {
-            id: 1,
-            bin_code: 'BIN_01',
-            name: 'Limbe Market NW Gate',
-            location: 'Stalls 44-70',
-            lat: -15.8161085154919,
-            lng: 35.05312777760588,
-            status: 'critical',
-            fullness_percent: 100,
-            last_report: new Date(Date.now() - 5 * 60000),
-            reporter_name: 'Limbikani Phiri',
-            reporter_phone: '+265 99 123 4567',
-            capacity_liters: 1200,
-        },
-        {
-            id: 2,
-            bin_code: 'BIN_089',
-            name: 'Victoria Ave CBD',
-            location: 'Main Street',
-            lat: -15.811480936086843,
-            lng: 35.0555325833541,
-            status: 'critical',
-            fullness_percent: 98,
-            last_report: new Date(Date.now() - 8 * 60000),
-            reporter_name: 'Marshal Mussa',
-            reporter_phone: '+265 99 456 7890',
-            capacity_liters: 1200,
-        },
-        {
-            id: 3,
-            bin_code: 'BIN_018',
-            name: 'Produce Shed 4 (East)',
-            location: 'Market area',
-            lat: -15.811524923171396,
-            lng: 35.06323679230538,
-            status: 'critical',
-            fullness_percent: 82,
-            last_report: new Date(Date.now() - 12 * 60000),
-            reporter_name: 'Samule Joel',
-            reporter_phone: '+265 99 789 0123',
-            capacity_liters: 240,
-        },
-        {
-            id: 4,
-            bin_code: 'BIN_003',
-            name: 'Chichiri Roundabout',
-            location: 'Civic Center',
-            lat: -15.816886750793403,
-            lng: 35.05943289699813,
-            status: 'half-full',
-            fullness_percent: 65,
-            last_report: new Date(Date.now() - 15 * 60000),
-            reporter_name: 'Twambilire Jere',
-            reporter_phone: '+265 99 111 2222',
-            capacity_liters: 240,
-        },
-        {
-            id: 5,
-            bin_code: 'BIN_006',
-            name: 'Kanjedza Residential',
-            location: 'Drop Point C',
-            lat: -15.809801233209551,
-            lng: 35.064722688535355,
-            status: 'half-full',
-            fullness_percent: 55,
-            last_report: new Date(Date.now() - 22 * 60000),
-            reporter_name: 'John Doe',
-            reporter_phone: '+265 99 654 3210',
-            capacity_liters: 240,
-        },
-        {
-            id: 6,
-            bin_code: 'BIN_012',
-            name: 'Secondary Market Bin',
-            location: 'Chichiri Stand 2',
-            lat: -15.805293091968014,
-            lng: 35.04403626172913,
-            status: 'clear',
-            fullness_percent: 32,
-            last_report: new Date(Date.now() - 60 * 60000),
-            reporter_name: 'Jeremy Banda',
-            reporter_phone: '+265 99 234 5678',
-            capacity_liters: 240,
-        },
-        {
-            id: 7,
-            bin_code: 'BIN_007',
-            name: 'Butchery Offal Container',
-            location: 'Limbe Central',
-            lat: -15.809801233209551,
-            lng: 35.059640339803515,
-            status: 'clear',
-            fullness_percent: 18,
-            last_report: new Date(Date.now() - 2 * 60 * 60000),
-            reporter_name: 'Dalitso Ajijo',
-            reporter_phone: '+265 99 543 2100',
-            capacity_liters: 1200,
-        },
-    ];
-}
-
-function getMockReports() {
-    return [
-        { bin_id: 1, status: 'PENDING', timestamp: '08:15 AM' },
-        { bin_id: 2, status: 'PENDING', timestamp: '08:02 AM' },
-        { bin_id: 3, status: 'PENDING', timestamp: '07:45 AM' },
-        { bin_id: 4, status: 'IN PROGRESS', timestamp: '08:10 AM' },
-        { bin_id: 5, status: 'IN PROGRESS', timestamp: '07:50 AM' },
-        { bin_id: 6, status: 'COLLECTED', timestamp: '07:12 AM' },
-        { bin_id: 7, status: 'COLLECTED', timestamp: '06:45 AM' },
-    ];
+    console.log(`Loaded ${BINS.length} bins from Supabase`);
+    
+    REPORTS = await fetchReportsFromSupabase();
+    console.log(`Loaded ${REPORTS.length} reports from Supabase`);
 }
 
 // ============================================================
@@ -365,18 +236,32 @@ function setupRefreshButton() {
 // ============================================================
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('Dashboard loaded');
-    
-    await loadData();
-    initMap();
-    renderReportsFeed();
-    setupFilterButtons();
-    setupRefreshButton();
-    
-    setInterval(async () => {
-        REPORTS = await fetchReportsFromSupabase();
+    try {
+        console.log('Dashboard loading...');
+        
+        await loadData();
+        initMap();
         renderReportsFeed();
-    }, 30000);
+        setupFilterButtons();
+        setupRefreshButton();
+        
+        console.log('Dashboard ready');
+        
+        setInterval(async () => {
+            REPORTS = await fetchReportsFromSupabase();
+            renderReportsFeed();
+        }, 30000);
+    } catch (error) {
+        console.error('FATAL ERROR:', error);
+        document.body.innerHTML = `
+            <div style="padding: 40px; color: #d32f2f; font-family: monospace;">
+                <h2>Error Loading Dashboard</h2>
+                <p><strong>${error.message}</strong></p>
+                <p>Check browser console (F12) for details.</p>
+                <p>Verify Supabase credentials in shared/supabaseConfig.js</p>
+            </div>
+        `;
+    }
 });
 
 // ============================================================

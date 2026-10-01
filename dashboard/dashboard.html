@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIS WasteManagement - Dashboard</title>
+    <title>CivicWaste GIS - Dispatch Console</title>
     
     <!-- Leaflet CSS for mapping -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
     
-    <!-- -->
+    <!-- Our styles -->
     <link rel="stylesheet" href="./dashboard.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
             <div class="sidebar-header">
                 <div class="logo">
                     <span class="logo-icon">🗑️</span>
-                    <span class="logo-text">GIS WasteManagement</span>
+                    <span class="logo-text">CivicWaste GIS</span>
                 </div>
                 <div class="webhook-status">
                     <span class="status-dot online"></span>
@@ -29,7 +29,7 @@
 
             <nav class="sidebar-nav">
                 <a href="#" class="nav-item active" data-screen="gis-map">
-                    <span class="nav-icon">🗺</span>
+                    <span class="nav-icon">📍</span>
                     <span class="nav-label">GIS Map</span>
                     <span class="nav-badge critical">3 Bins</span>
                 </a>
@@ -45,12 +45,12 @@
                 </a>
                 <a href="#" class="nav-item disabled" data-screen="audit-sla">
                     <span class="nav-icon">📊</span>
-                    <span class="nav-label">Statistics</span>
+                    <span class="nav-label">Audit & SLA Stats</span>
                     <span class="nav-tag coming-soon">Coming</span>
                 </a>
             </nav>
 
-            <!-- <div class="sidebar-footer">
+            <div class="sidebar-footer">
                 <div class="mode-status">
                     <span class="label">MODE STATUS</span>
                     <span class="value">Limbe Central</span>
@@ -59,7 +59,7 @@
                     <span class="label">Telemetry Sync</span>
                     <span class="value">00:06s ago</span>
                 </div>
-            </div> -->
+            </div>
         </aside>
 
         <!-- CENTER: MAP + HEADER -->
@@ -68,7 +68,8 @@
             <!-- Top Header Bar -->
             <header class="top-bar">
                 <div class="header-left">
-                    <h1 class="district-title">Blantyre City Council</h1>
+                    <h1 class="district-title">Blantyre City Council • Limbe Market</h1>
+                    <p class="district-subtitle">Sector 4</p>
                 </div>
                 
                 <div class="header-center">
@@ -78,7 +79,7 @@
                     </div>
                     <div class="fleet-status">
                         <span class="fleet-icon">🚛</span>
-                        <span class="fleet-text">Available Vehicles: 4</span>
+                        <span class="fleet-text">Fleet Units Active: 4 En Route</span>
                     </div>
                 </div>
 
@@ -124,12 +125,12 @@
             <!-- Bin Popup (Hidden by default, shown on click) -->
             <div id="bin-popup" class="bin-popup hidden">
                 <div class="popup-header">
-                    <h3 id="popup-bin-id" class="popup-title">Bin #01</h3>
+                    <h3 id="popup-bin-id" class="popup-title">Receptacle #042</h3>
                     <button id="popup-close" class="popup-close">✕</button>
                 </div>
                 
                 <div class="popup-body">
-                    <p id="popup-location" class="popup-location">Limbe Market NW Gate </p>
+                    <p id="popup-location" class="popup-location">Limbe Market NW Gate (Stalls 44-70)</p>
                     
                     <div class="popup-section">
                         <div class="popup-row">
@@ -142,7 +143,7 @@
                         </div>
                         <div class="popup-row">
                             <span class="label">Reporter:</span>
-                            <span id="popup-reporter" class="value">Limbani Phiri</span>
+                            <span id="popup-reporter" class="value">Sweeper #5 (WA)</span>
                         </div>
                         <div class="popup-row">
                             <span class="label">Contact:</span>
@@ -183,12 +184,10 @@
     </div>
 
     <!-- Scripts -->
-     <!-- Add this line before <script src="../shared/supabaseConfig.js"> -->
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../shared/supabaseConfig.js"></script>
-<script src="../shared/utils.js"></script>
-<script src="./dashboard.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../shared/supabaseConfig.js"></script>
+    <script src="../shared/utils.js"></script>
+    <script src="./dashboard.js"></script>
 </body>
 </html>
