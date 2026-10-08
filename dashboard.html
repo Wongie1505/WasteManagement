@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bin Tracker | Dashboard</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+<div class="top">
+  <span class="brand">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    WasteManagement
+  </span>
+  <span id="updated" class="updated"></span>
+</div>
+
+<div id="err" class="err" hidden>Can't reach the server. Showing the last data received.</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<div class="app">
+  <aside>
+    <div class="counts">
+      <div class="tile"><b id="nFull">0</b><span><i class="dot full"></i>Full</span></div>
+      <div class="tile"><b id="nFine">0</b><span><i class="dot fine"></i>Fine</span></div>
+      <div class="tile"><b id="nStale">0</b><span><i class="dot grey"></i>Unverified</span></div>
+    </div>
+    <div id="list"></div>
+  </aside>
+  <div id="map"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="js/config.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

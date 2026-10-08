@@ -1,0 +1,2 @@
+const SB = 'https://xspxsjzriwwoasmqiygi.supabase.co';
+const KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhzcHhzanpyaXd3b2FzbXFpeWdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0MDU3NTQsImV4cCI6MjEwNjk4MTc1NH0.nUvH8Q6UdQDFNS6y61uPpqjv5qr2jued_hTl3wiBzRE';
