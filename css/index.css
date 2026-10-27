@@ -21,3 +21,8 @@ header p{color:var(--muted);margin-top:8px}
 .ico svg{width:28px;height:28px}
 .ico.full{background:var(--full-bg);color:var(--full)}
 .ico.map{background:var(--fine-bg);color:var(--fine)}
+
+.ico.truck {
+  background: var(--fine-bg);
+  color: var(--fine);
+}

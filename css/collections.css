@@ -1,0 +1,260 @@
+/* ===== Tokens ===== */
+:root {
+  --bg: #f3f5f4;
+  --card: #ffffff;
+  --ink: #14231c;
+  --muted: #5f6f67;
+  --line: #dfe5e2;
+  --brand: #14532d;
+  --go: #15803d;
+  --armed: #b45309;
+  --route: #1d4ed8;
+}
+
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+.icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ===== Top bar and banner ===== */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: var(--brand);
+  color: #fff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.brand .icon {
+  width: 22px;
+  height: 22px;
+}
+
+.role {
+  font-size: 0.85rem;
+  opacity: 0.85;
+}
+
+.err {
+  padding: 10px 20px;
+  font-size: 0.9rem;
+  color: #9a3412;
+  background: #fff3eb;
+  border-bottom: 1px solid #fed7aa;
+}
+
+/* ===== Layout ===== */
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 32px;
+}
+
+.label {
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.sub {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+.progress {
+  height: 8px;
+  margin-top: 14px;
+  overflow: hidden;
+  background: var(--line);
+  border-radius: 4px;
+}
+
+#bar {
+  width: 0;
+  height: 100%;
+  background: var(--go);
+  transition: width 0.3s;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ===== Next stop card ===== */
+.next {
+  padding: 22px 20px;
+  background: var(--card);
+  border: 2px solid var(--brand);
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(20, 35, 28, 0.1);
+}
+
+.next h2 {
+  font-size: 1.7rem;
+  line-height: 1.2;
+}
+
+.meta {
+  margin: 6px 0 18px;
+  color: var(--muted);
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 16px;
+  font: inherit;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid var(--brand);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.btn-outline {
+  margin-bottom: 12px;
+  color: var(--brand);
+  background: transparent;
+}
+
+.btn-go {
+  min-height: 72px;
+  font-size: 1.4rem;
+  color: #fff;
+  background: var(--go);
+  border-color: var(--go);
+}
+
+/* First tap arms the button, second tap confirms */
+.btn-go.armed {
+  background: var(--armed);
+  border-color: var(--armed);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.btn:active {
+  filter: brightness(0.9);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--ink);
+  outline-offset: 3px;
+}
+
+/* ===== Stop list ===== */
+.stops {
+  padding: 0;
+  list-style: none;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.stops li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stops li:last-child {
+  border-bottom: 0;
+}
+
+.num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--route);
+  border-radius: 50%;
+}
+
+.stops .done {
+  opacity: 0.55;
+}
+
+.stops .done .num {
+  background: var(--go);
+}
+
+.stops .current {
+  font-weight: 700;
+  background: #f0f7f2;
+}
+
+/* ===== Empty state ===== */
+.msg {
+  padding: 40px 20px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+
+.msg h2 {
+  margin-bottom: 6px;
+  font-size: 1.5rem;
+}
+
+.msg p {
+  color: var(--muted);
+}

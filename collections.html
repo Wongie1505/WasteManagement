@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14532d">
+  <title>Bin Tracker | Driver</title>
+  <link rel="stylesheet" href="css/collections.css">
+</head>
+
+<body>
+
+  <!-- Top bar -->
+  <div class="top">
+    <span class="brand">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Bin Tracker
+    </span>
+    <span class="role">Driver</span>
+  </div>
+
+  <!-- Offline or error banner -->
+  <div id="err" class="err" hidden></div>
+
+  <div class="wrap">
+
+    <header>
+      <div class="label">Today's route</div>
+      <h1 id="title">Loading...</h1>
+      <p id="sub" class="sub"></p>
+      <div id="progress" class="progress" hidden>
+        <div id="bar"></div>
+      </div>
+    </header>
+
+    <main>
+
+      <!-- The one stop to do right now -->
+      <section id="next" class="next" hidden>
+        <div id="nextLabel" class="label"></div>
+        <h2 id="nextName"></h2>
+        <p id="nextMeta" class="meta"></p>
+
+        <a id="navBtn" class="btn btn-outline" target="_blank" rel="noopener">Navigate</a>
+        <button id="collectBtn" class="btn btn-go">Collected</button>
+      </section>
+
+      <!-- Full route, in order -->
+      <ol id="stops" class="stops"></ol>
+
+      <div id="empty" class="msg" hidden>
+        <h2>No route yet</h2>
+        <p>Ask the admin to publish today's route.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/collections.js"></script>
+</body>
+
+</html>

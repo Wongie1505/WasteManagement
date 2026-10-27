@@ -1,39 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Bin Tracker | Dashboard</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-<link rel="stylesheet" href="css/dashboard.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bin Tracker | Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+  <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
 <body>
-<div class="top">
-  <span class="brand">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-    WasteManagement
-  </span>
-  <span id="updated" class="updated"></span>
-</div>
 
-<div id="err" class="err" hidden>Can't reach the server. Showing the last data received.</div>
+  <!-- Top bar -->
+  <div class="top">
+    <span class="brand">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+        <circle cx="12" cy="10" r="3"/>
+      </svg>
+      Bin Tracker
+    </span>
+    <span id="updated" class="updated"></span>
+  </div>
 
-<div id="toasts" class="toasts" aria-live="polite"></div>
+  <div id="err" class="err" hidden>Can't reach the server. Showing the last data received.</div>
 
-<div class="app">
-  <aside>
-    <div class="counts">
-      <div class="tile"><b id="nFull">0</b><span><i class="dot full"></i>Full</span></div>
-      <div class="tile"><b id="nFine">0</b><span><i class="dot fine"></i>Fine</span></div>
-      <div class="tile"><b id="nStale">0</b><span><i class="dot grey"></i>Unverified</span></div>
+  <!-- Status change messages -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <div class="app">
+
+    <aside>
+
+      <!-- Status counts -->
+      <div class="counts">
+        <div class="tile"><b id="nFull">0</b><span><i class="dot full"></i>Full</span></div>
+        <div class="tile"><b id="nFine">0</b><span><i class="dot fine"></i>Fine</span></div>
+        <div class="tile"><b id="nStale">0</b><span><i class="dot grey"></i>Unverified</span></div>
+      </div>
+
+      <!-- Route planner -->
+      <section class="planner">
+        <h2>Route planner</h2>
+
+        <label class="check">
+          <input type="checkbox" id="inclStale">
+          Include unverified bins
+        </label>
+
+        <button class="btn btn-solid" id="planBtn" disabled>Plan route</button>
+        <p id="planMsg" class="note" hidden></p>
+
+        <!-- Shown once a route exists -->
+        <div id="routeBox" hidden>
+
+          <div class="stats">
+            <div class="tile"><b id="statKm">-</b><span>Distance</span></div>
+            <div class="tile"><b id="statTime">-</b><span>Driving</span></div>
+            <div class="tile"><b id="statFuel">-</b><span>Fuel (est.)</span></div>
+          </div>
+
+          <p id="saving" class="saving"></p>
+
+          <ol id="stops" class="stops"></ol>
+
+          <button class="btn btn-solid" id="publishBtn">Publish to driver</button>
+
+          <a id="gmaps" class="btn btn-solid" target="_blank" rel="noopener">Open in Google Maps</a>
+          <p id="gmapsNote" class="note" hidden></p>
+
+          <button class="link" id="clearBtn">Clear route</button>
+        </div>
+      </section>
+
+      <!-- Bins, most urgent first -->
+      <div id="list"></div>
+    </aside>
+
+    <div class="mapwrap">
+      <div id="map"></div>
+
+      <!-- Bin details, opens when a pin or a list row is clicked -->
+      <section id="panel" class="panel" hidden>
+
+        <header class="panel-head">
+          <div>
+            <h2 id="pName"></h2>
+            <p id="pId" class="meta"></p>
+          </div>
+          <button id="pClose" class="close" aria-label="Close panel">&times;</button>
+        </header>
+
+        <div class="panel-body">
+          <span id="pStatus" class="chip"></span>
+          <p id="pWhen" class="meta"></p>
+
+          <!-- Latest photo, tap to enlarge -->
+          <button id="pPhotoBtn" class="photo-btn" hidden>
+            <img id="pPhoto" alt="Latest report photo">
+          </button>
+          <p id="pPhotoCap" class="meta" hidden></p>
+
+          <dl class="facts">
+            <dt>Last collected</dt>
+            <dd id="pCollected">-</dd>
+            <dt>Reported by</dt>
+            <dd class="muted">Available after shop PINs</dd>
+            <dt>Location</dt>
+            <dd id="pCoords"></dd>
+          </dl>
+
+          <h3>Recent reports</h3>
+          <ul id="pHistory" class="history"></ul>
+        </div>
+
+      </section>
     </div>
-    <div id="list"></div>
-  </aside>
-  <div id="map"></div>
-</div>
+  </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
-<script src="js/config.js"></script>
-<script src="js/dashboard.js"></script>
+  <!-- Full-screen photo viewer -->
+  <div id="lightbox" class="lightbox" hidden>
+    <img id="lbImg" alt="Report photo">
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/dashboard.js"></script>
 </body>
+
 </html>

@@ -1,49 +1,303 @@
-:root{
-  --bg:#f3f5f4;--card:#fff;--ink:#14231c;--muted:#5f6f67;--line:#dfe5e2;
-  --brand:#14532d;
-  --full:#c2410c;--full-bg:#fff3eb;
-  --fine:#15803d;--fine-bg:#ecf8f0;
+/* ===== Tokens ===== */
+:root {
+  --bg: #f3f5f4;
+  --card: #ffffff;
+  --ink: #14231c;
+  --muted: #5f6f67;
+  --line: #dfe5e2;
+  --brand: #14532d;
+  --full: #c2410c;
+  --full-bg: #fff3eb;
+  --fine: #15803d;
+  --fine-bg: #ecf8f0;
 }
-*{box-sizing:border-box;margin:0}
-html,body{min-height:100%}
-body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink);display:flex;flex-direction:column;min-height:100vh;-webkit-tap-highlight-color:transparent}
 
-.top{background:var(--brand);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:10px;font-weight:600;letter-spacing:.2px}
-.top svg{width:22px;height:22px}
+/* ===== Base ===== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
 
-.wrap{flex:1;display:flex;flex-direction:column;gap:22px;width:100%;max-width:480px;margin:0 auto;padding:26px 16px 20px}
-.label{font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
-h1{font-size:1.8rem;line-height:1.2;margin-top:4px}
-.sub{color:var(--muted);margin-top:6px}
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+}
 
-main{flex:1;display:flex;flex-direction:column}
-.opts{flex:1;display:flex;flex-direction:column;gap:14px}
+[hidden] {
+  display: none !important;
+}
 
-.opt{flex:1;min-height:120px;max-height:210px;display:flex;align-items:center;gap:16px;padding:20px;border-radius:18px;background:var(--card);border:2px solid var(--line);font:inherit;text-align:left;color:var(--ink);cursor:pointer;box-shadow:0 1px 3px rgba(20,35,28,.07);transition:transform .08s,border-color .15s,background .15s}
-.opt:active{transform:scale(.98)}
-.opt strong{display:block;font-size:1.4rem}
-.opt small{display:block;margin-top:2px;color:var(--muted);font-size:.95rem}
+/* Shared line-icon style, sized where it is used */
+.icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
-.ico{flex:none;width:56px;height:56px;border-radius:50%;display:grid;place-items:center}
-.ico svg{width:28px;height:28px}
-#full .ico{background:var(--full-bg);color:var(--full)}
-#fine .ico{background:var(--fine-bg);color:var(--fine)}
-#full:hover,#full:active{border-color:var(--full);background:var(--full-bg)}
-#fine:hover,#fine:active{border-color:var(--fine);background:var(--fine-bg)}
+/* ===== Layout ===== */
+.top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 600;
+}
 
-.msg{flex:1;max-height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:32px 20px;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 1px 3px rgba(20,35,28,.07)}
-.msg h2{font-size:1.6rem}
-.msg p{color:var(--muted)}
-.msg .ico{width:64px;height:64px;margin-bottom:6px}
-.msg .ico svg{width:32px;height:32px}
-.ico.ok{background:var(--fine-bg);color:var(--fine)}
-.ico.warn{background:var(--full-bg);color:var(--full)}
+.top .icon {
+  width: 22px;
+  height: 22px;
+}
 
-.link{background:none;border:0;color:var(--brand);font:inherit;font-weight:600;text-decoration:underline;padding:12px;margin-top:8px;cursor:pointer}
+.wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 26px 16px 20px;
+}
 
-.opt:focus-visible,.link:focus-visible{outline:3px solid var(--brand);outline-offset:3px}
-[hidden]{display:none!important}
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
 
-.pick label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600;margin-bottom:6px}
-.pick select{width:100%;padding:14px 44px 14px 14px;font:inherit;font-size:1rem;color:var(--ink);background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235f6f67' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 14px center/20px;border:2px solid var(--line);border-radius:12px;appearance:none;-webkit-appearance:none;cursor:pointer}
-.pick select:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+/* ===== Heading ===== */
+.label,
+.pick label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+h1 {
+  font-size: 1.8rem;
+  line-height: 1.2;
+}
+
+.sub {
+  margin-top: 6px;
+  color: var(--muted);
+}
+
+/* ===== Bin search ===== */
+.pick input {
+  width: 100%;
+  padding: 14px;
+  font: inherit;
+  font-size: 1rem; /* 16px stops iOS zooming in on focus */
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+}
+
+.pick input:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 2px;
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: var(--full);
+}
+
+/* ===== Status buttons ===== */
+.opts {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.opt {
+  flex: 1;
+  min-height: 120px;
+  max-height: 210px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  font: inherit;
+  text-align: left;
+  color: var(--ink);
+  background: var(--card);
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 1px 3px rgba(20, 35, 28, 0.07);
+  cursor: pointer;
+  transition: transform 0.08s, border-color 0.15s, background 0.15s;
+}
+
+.opt:active {
+  transform: scale(0.98);
+}
+
+.opt strong {
+  display: block;
+  font-size: 1.4rem;
+}
+
+.opt small {
+  display: block;
+  margin-top: 2px;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+#full:hover,
+#full:active {
+  border-color: var(--full);
+  background: var(--full-bg);
+}
+
+#fine:hover,
+#fine:active {
+  border-color: var(--fine);
+  background: var(--fine-bg);
+}
+
+/* ===== Icon circles ===== */
+.ico {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
+
+.ico .icon {
+  width: 28px;
+  height: 28px;
+}
+
+#full .ico {
+  background: var(--full-bg);
+  color: var(--full);
+}
+
+#fine .ico {
+  background: var(--fine-bg);
+  color: var(--fine);
+}
+
+/* ===== Success and error cards ===== */
+.msg {
+  flex: 1;
+  max-height: 460px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  text-align: center;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 1px 3px rgba(20, 35, 28, 0.07);
+}
+
+.msg h2 {
+  font-size: 1.6rem;
+}
+
+.msg p {
+  color: var(--muted);
+}
+
+.msg .ico {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 6px;
+}
+
+.msg .ico .icon {
+  width: 32px;
+  height: 32px;
+}
+
+.ico.ok {
+  background: var(--fine-bg);
+  color: var(--fine);
+}
+
+.ico.ok .icon {
+  stroke-width: 2.5;
+}
+
+.ico.warn {
+  background: var(--full-bg);
+  color: var(--full);
+}
+
+/* ===== Photo ===== */
+.photo {
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 12px 20px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--brand);
+  background: transparent;
+  border: 2px solid var(--brand);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+.btn-solid {
+  margin-top: 12px;
+  color: #fff;
+  background: var(--brand);
+}
+
+.photo-msg {
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+/* ===== Correction link ===== */
+.link {
+  margin-top: 8px;
+  padding: 12px;
+  font: inherit;
+  font-weight: 600;
+  color: var(--brand);
+  text-decoration: underline;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+/* ===== Keyboard focus ===== */
+.opt:focus-visible,
+.btn:focus-visible,
+.link:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+}

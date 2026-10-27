@@ -1,58 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#14532d">
-<title>Bin status report</title>
-<link rel="stylesheet" href="css/report.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#14532d">
+  <title>Bin status report</title>
+  <link rel="stylesheet" href="css/report.css">
 </head>
+
 <body>
-<div class="top">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-  Bin Tracker
-</div>
 
-<div class="wrap">
-  <header>
-    <div class="label">Reporting for</div>
-    <h1 id="name">Loading...</h1>
-    <p class="sub">What does this bin look like right now?</p>
-  </header>
-
-  <div id="pick" class="pick" hidden>
-    <label for="picker">Select bin</label>
-    <select id="picker"></select>
+  <!-- Top bar -->
+  <div class="top">
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+    Bin Tracker
   </div>
 
-  <main>
-    <div id="choose" class="opts" hidden>
-      <button class="opt" id="full">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg></span>
-        <span><strong>Full</strong><small>Needs to be collected</small></span>
-      </button>
-      <button class="opt" id="fine">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>
-        <span><strong>Still fine</strong><small>No collection needed yet</small></span>
-      </button>
+  <div class="wrap">
+
+    <!-- Selected bin -->
+    <header>
+      <div class="label">Reporting for</div>
+      <h1 id="name">Loading...</h1>
+      <p class="sub">What does this bin look like right now?</p>
+    </header>
+
+    <!-- Bin search: type an ID or a name, or pick from the suggestions -->
+    <div id="pick" class="pick" hidden>
+      <label for="binSearch">Find a bin</label>
+      <input
+        id="binSearch"
+        type="text"
+        list="binList"
+        placeholder="Type a bin ID or name"
+        autocomplete="off"
+        autocapitalize="off"
+        spellcheck="false">
+      <datalist id="binList"></datalist>
+      <p id="pickHint" class="hint" hidden>No bin matches that. Check the ID on the sticker.</p>
     </div>
 
-    <div id="done" class="msg" hidden>
-      <span class="ico ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
-      <h2 id="doneTitle"></h2>
-      <p id="doneText"></p>
-      <button class="link" id="undo" hidden></button>
-    </div>
+    <main>
 
-    <div id="bad" class="msg" hidden>
-      <span class="ico warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>
-      <h2>Unknown bin</h2>
-      <p>Scan the sticker again or pick a bin above.</p>
-    </div>
-  </main>
-</div>
+      <!-- Status buttons -->
+      <div id="choose" class="opts" hidden>
 
-<script src="js/config.js"></script>
-<script src="js/report.js"></script>
+        <button class="opt" id="full">
+          <span class="ico">
+            <svg class="icon" viewBox="0 0 24 24">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+              <path d="M10 11v6M14 11v6"/>
+              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+            </svg>
+          </span>
+          <span>
+            <strong>Full</strong>
+            <small>Needs to be collected</small>
+          </span>
+        </button>
+
+        <button class="opt" id="fine">
+          <span class="ico">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </span>
+          <span>
+            <strong>Still fine</strong>
+            <small>No collection needed yet</small>
+          </span>
+        </button>
+
+      </div>
+
+      <!-- Success screen -->
+      <div id="done" class="msg" hidden>
+        <span class="ico ok">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+        </span>
+
+        <h2 id="doneTitle"></h2>
+        <p id="doneText"></p>
+
+        <!-- Optional photo, only offered once the report reached the server -->
+        <div id="photoBox" class="photo" hidden>
+          <button class="btn" id="photoBtn">Add a photo (optional)</button>
+          <input id="photoInput" type="file" accept="image/*" hidden>
+          <p id="photoMsg" class="photo-msg"></p>
+        </div>
+
+        <button class="btn btn-solid" id="backBtn">Back</button>
+
+        <button class="link" id="undo" hidden></button>
+      </div>
+
+      <!-- Unknown bin -->
+      <div id="bad" class="msg" hidden>
+        <span class="ico warn">
+          <svg class="icon" viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+        </span>
+        <h2>Unknown bin</h2>
+        <p>Scan the sticker again or search for the bin above.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/report.js"></script>
 </body>
+
 </html>
